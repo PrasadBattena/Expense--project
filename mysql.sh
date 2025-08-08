@@ -35,25 +35,22 @@ echo "Script started executing at: $TIMESTAMP" &>>$LOG_FILE_NAME
 CHECK_ROOT
 
 dnf install mysql-server -y &>>$LOG_FILE_NAME
-VALIDATE $? " Installing mysql server"
+VALIDATE $? " Installing Mysql server"
 
 systemctl enable mysqld &>>$LOG_FILE_NAME
-VALIDATE $? "Enabling mysql server"
+VALIDATE $? "Enabling Mysql server"
 
 systemctl start mysqld &>>$LOG_FILE_NAME
-VALIDATE $? "Starting mysql server"
-
-mysql_secure_installation --set-root-pass ExpenseApp@1
-VALIDATE $? "Setting Root Password"
+VALIDATE $? "Starting Mysql server"
 
 mysql -h mysql.daws82s.online -u root -pExpenseApp@1 -e 'show databases;'
 
 if [ $? -ne o ]
 then
-    echo "mysql Root password not setup"  &>>$LOG_FILE_NAME
+    echo "Mysql Root password not setup"  &>>$LOG_FILE_NAME
     mysql _secure_installtion --set-root-pass ExpenseApp@1
     VALIDATE $? "Setting Root Password"
 
 else
-    echo -e "mysql Root passwrd already setup .. $Y Skipping $N"
+    echo -e "Mysql Root password already setup .. $Y Skipping $N"
  fi   
